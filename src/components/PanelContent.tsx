@@ -18,7 +18,6 @@ export const PanelContent: React.FC<PanelContentProps> = ({
     padded={true}
     showLineNumbers={showLineNumbers}
     wrapLongLines={wrapLines}
-    format={"html"}
   >
     {code}
   </SyntaxHighlighter>

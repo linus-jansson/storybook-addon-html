@@ -1,6 +1,6 @@
 {
-  "name": "@whitespace/storybook-addon-html",
-  "version": "7.0.0",
+  "name": "@linus-jansson/storybook-addon-html",
+  "version": "7.0.1",
   "description": "A Storybook addon that extracts and displays compiled syntax-highlighted HTML",
   "keywords": [
     "storybook-addon",
@@ -80,7 +80,7 @@
     "zx": "^7.2.3"
   },
   "peerDependencies": {
-    "storybook": "^8.2.0"
+    "storybook": "^9.0.0"
   },
   "publishConfig": {
     "access": "public"

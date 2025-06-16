@@ -6,6 +6,9 @@ import type {
 import { EVENTS } from "./constants";
 import { Parameters } from "./types";
 
+import prettier from 'prettier/standalone';
+import parserHtml from 'prettier/plugins/html';
+
 export const withHTML = (
   storyFn: StoryFunction<Renderer>,
   {
@@ -14,10 +17,14 @@ export const withHTML = (
 ) => {
   const emit = useChannel({});
 
-  setTimeout(() => {
+  setTimeout( async () => {
     const rootSelector = parameters.root || "#storybook-root, #root";
     const root = document.querySelector(rootSelector);
     let code: string = root ? root.innerHTML : `${rootSelector} not found.`;
+    code = await prettier.format(code, {
+      parser: 'html',
+      plugins: [parserHtml],
+    });
     const { removeEmptyComments, removeComments, transform } = parameters;
     if (removeEmptyComments) {
       code = code.replace(/<!--\s*-->/g, "");
