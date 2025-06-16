@@ -21,10 +21,7 @@ export const withHTML = (
     const rootSelector = parameters.root || "#storybook-root, #root";
     const root = document.querySelector(rootSelector);
     let code: string = root ? root.innerHTML : `${rootSelector} not found.`;
-    code = await prettier.format(code, {
-      parser: 'html',
-      plugins: [parserHtml],
-    });
+
     const { removeEmptyComments, removeComments, transform } = parameters;
     if (removeEmptyComments) {
       code = code.replace(/<!--\s*-->/g, "");
@@ -36,6 +33,19 @@ export const withHTML = (
         removeComments.test(p1) ? "" : match,
       );
     }
+
+    try {
+      code = await prettier.format(code, {
+        parser: 'html',
+        plugins: [parserHtml],
+      });
+    } catch (error) {
+      console.error("Prettier formatting error:", error);
+      // If prettier fails, we still want to emit the code
+      // without formatting.
+      code = code;      
+    }
+    
     if (typeof transform === "function") {
       try {
         code = transform(code);
